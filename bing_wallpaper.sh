@@ -22,6 +22,7 @@ fi
 
 marketoption=("en-US" "zh-CN" "ja-JP" "en-AU" "en-UK" "de-DE" "en-NZ" "en-CA")
 directory="$HOME/Pictures/Bing Wallpaper"
+resolution=$(xrandr |grep "*" |awk '{print $1}')
 host="http://global.bing.com"
 idx=-1 #  -1 today, 0 tomorrow 1 the day before yesterday
 mkdir -p "$directory"
@@ -41,6 +42,7 @@ do
             try=0
             while [ $try -lt 5 ]
             do
+                imgurl=$(echo $imgurl | sed "s/1920x1080/$resolution/")
                 if curl -s $host$imgurl -o "$file"
                 then
                     break
@@ -54,10 +56,10 @@ do
     fi
 done
 
-choose=$(( $(date +%-H)%${#marketoption[@]} ))
+choose=$(( $(date +%-M)%${#marketoption[@]} ))
 market=${marketoption[$choose]}
 img="$directory/$(date +%y%m%d)_$market.jpg"
 if [ -f "$img" ]
 then
-    feh --bg-fill "$img"
+    DISPLAY=:0.0 feh --bg-fill "$img"
 fi
