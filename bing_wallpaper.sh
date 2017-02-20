@@ -56,7 +56,7 @@ do
     fi
 done
 
-choose=$(( $(date +%-M)%${#marketoption[@]} ))
+choose=$(( $(date +%-H)%${#marketoption[@]} ))
 market=${marketoption[$choose]}
 img="$directory/$(date +%y%m%d)_$market.jpg"
 if [ -f "$img" ]
