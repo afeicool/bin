@@ -24,7 +24,7 @@ marketoption=("en-US" "zh-CN" "ja-JP" "en-AU" "en-UK" "de-DE" "en-NZ" "en-CA")
 directory="$HOME/Pictures/Bing Wallpaper"
 resolution=$(xrandr |grep "*" |awk '{print $1}')
 host="http://global.bing.com"
-idx=-1 #  -1 today, 0 tomorrow 1 the day before yesterday
+idx=-1 #  -1 today, 0 yesterday 1 the day before yesterday
 mkdir -p "$directory"
 
 for market in ${marketoption[*]}
@@ -56,7 +56,7 @@ do
     fi
 done
 
-choose=$(( $(date +%-H)%${#marketoption[@]} ))
+choose=$(( $(date +%-H) % ${#marketoption[@]} ))
 market=${marketoption[$choose]}
 img="$directory/$(date +%y%m%d)_$market.jpg"
 if [ -f "$img" ]
