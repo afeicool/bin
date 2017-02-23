@@ -22,7 +22,8 @@ fi
 
 marketoption=("en-US" "zh-CN" "ja-JP" "en-AU" "en-UK" "de-DE" "en-NZ" "en-CA")
 directory="$HOME/Pictures/Bing Wallpaper"
-resolution=$(xrandr |grep "*" |awk '{print $1}')
+resolution=$(xrandr 2> /dev/null |grep "*" |awk '{print $1}')
+: ${resolution:="1366x768"}
 host="http://global.bing.com"
 idx=-1 #  -1 today, 0 yesterday 1 the day before yesterday
 mkdir -p "$directory"
@@ -43,7 +44,8 @@ do
             while [ $try -lt 5 ]
             do
                 imgurl=$(echo $imgurl | sed "s/1920x1080/$resolution/")
-                if curl -s $host$imgurl -o "$file"
+                echo $imgurl
+                if curl $host$imgurl -o "$file"
                 then
                     break
                 else
