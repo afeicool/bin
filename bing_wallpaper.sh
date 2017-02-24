@@ -44,7 +44,7 @@ do
             while [ $try -lt 5 ]
             do
                 imgurl=$(echo $imgurl | sed "s/1920x1080/$resolution/")
-                if curl $host$imgurl -o "$file"
+                if curl -s $host$imgurl -o "$file"
                 then
                     break
                 else
